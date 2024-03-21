@@ -1,0 +1,76 @@
+
+-- Create Department Table
+CREATE TABLE Department (
+    dname VARCHAR2(255) PRIMARY KEY,
+    dept_description VARCHAR2(255),
+    manager_id number(3)
+);
+
+-- Create Student Table
+CREATE TABLE Student (
+    stud_id number(6) PRIMARY KEY,
+    fname VARCHAR2(255),
+    lname VARCHAR2(255),
+    address VARCHAR2(255),
+    email VARCHAR2(255),
+    gender CHAR(1),
+    faculty VARCHAR2(255),
+    dname VARCHAR2(255),
+    GPA decimal(8,2),
+    CONSTRAINT fk_student_department FOREIGN KEY (dname) REFERENCES Department(dname)
+);
+
+-- Create Stud_pho Table
+CREATE TABLE Stud_pho (
+    stud_id number(6),
+    phone VARCHAR2(20),
+    PRIMARY KEY (stud_id, phone),
+    CONSTRAINT fk_stud_pho_student FOREIGN KEY (stud_id) REFERENCES Student(stud_id)
+);
+
+-- Create Professor Table
+CREATE TABLE Professor (
+    professor_id number(5) PRIMARY KEY,
+    fname VARCHAR2(255),
+    lname VARCHAR2(255),
+    salary DECIMAL(10, 2),
+    address VARCHAR2(255),
+    email VARCHAR2(255),
+    dname VARCHAR2(255),
+    CONSTRAINT fk_professor_department FOREIGN KEY (dname) REFERENCES Department(dname)
+);
+
+-- Create Prof_pho Table
+CREATE TABLE Prof_pho (
+    professor_id number(5),
+    phone VARCHAR2(20),
+    PRIMARY KEY (professor_id, phone),
+    CONSTRAINT fk_prof_pho_professor FOREIGN KEY (professor_id) REFERENCES Professor(professor_id)
+);
+
+-- Create Course Table
+CREATE TABLE Course (
+    cid number(5)PRIMARY KEY,
+    c_name VARCHAR2(255),
+    c_hours number(5),
+    dname VARCHAR2(255),
+    year number(2),
+    professor_id number(5),
+    CONSTRAINT fk_course_department FOREIGN KEY (dname) REFERENCES Department(dname),
+    CONSTRAINT fk_course_professor FOREIGN KEY (professor_id) REFERENCES Professor(professor_id)
+);
+
+-- Create Stud_course Table
+CREATE TABLE Stud_course (
+    stud_id number(6),
+    cid number(5),
+    grade_  varchar(3) ,
+    PRIMARY KEY (stud_id, cid),
+    CONSTRAINT fk_stud_course_student FOREIGN KEY (stud_id) REFERENCES Student(stud_id),
+    CONSTRAINT fk_stud_course_course FOREIGN KEY (cid) REFERENCES Course(cid)
+);
+
+ALTER TABLE Department
+ADD CONSTRAINT fk_manager
+FOREIGN KEY (manager_id) REFERENCES Professor(professor_id);
+

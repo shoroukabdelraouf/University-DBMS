@@ -1,0 +1,33 @@
+
+INSERT INTO department (dname, dept_description) VALUES ('bio', 'new department');
+INSERT INTO department (dname, dept_description) VALUES ('business information system', 'programming and commerce');  
+INSERT INTO department (dname, dept_description) VALUES ( 'electronics','new'); 
+
+INSERT INTO course (cid, c_name, c_hours, dname) VALUES (1, 'principles of accounting', 60, 'business information system');
+INSERT INTO course ( cid,c_name, c_hours, dname) VALUES (2,'chemistry', 50, 'bio');
+INSERT INTO course ( cid,c_name, c_hours, dname) VALUES (3,'c#', 90, 'business information system');
+
+INSERT INTO student ( stud_id,fname, lname, address, email, gender, faculty, dname)VALUES (1,'shorouk', 'mohamed', 'elsanta', 'shorouk@gmail.com', 'f', 'commerce', 'business information system');
+INSERT INTO student ( stud_id, fname, lname, address, email, gender, faculty, dname)VALUES (2, 'aya', 'ibrahim', 'elsanta', 'aya@gmail.com', 'f', 'engineering', 'electronics');
+INSERT INTO student ( stud_id,fname, lname, address, email, gender, faculty, dname)VALUES (3, 'hadeer', 'mohamed', 'kafr eldeep', 'hadeer@gmail.com', 'f', 'science', 'bio');
+
+insert into stud_course(stud_id,CID,grade_)values(1,1,'A+');
+insert into stud_course(stud_id,CID,grade_)values(2,1,'A');
+insert into stud_course(stud_id,CID,grade_)values(2,2,'B');
+
+insert into Professor( professor_id, fname ,lname ,salary,address , email ,dname )values(1,'mohamed','handosa',5000,'mansora','mohamed@gmail.com','business information system');
+insert into Professor(professor_id, fname ,lname ,salary,address , email ,dname )values(2,'sameh','matar',7000,'tanta','sameh@gmail.com','business information system');
+insert into Professor(professor_id,  fname ,lname ,salary,address , email ,dname )values(3,'ali','ahmed',3000,'tanta','ali@gmail.com','bio');
+
+insert into prof_pho(professor_id,phone) values(1,'01098758866');
+insert into prof_pho(professor_id,phone) values(1,'01452879635');
+insert into prof_pho(professor_id,phone) values(2,'01224109510');
+
+insert into stud_pho(stud_id,phone) values(1,'010236985');
+insert into stud_pho(stud_id,phone) values(1,'07788945');
+insert into stud_pho(stud_id,phone) values(2,'0185263985');
+
+select * from user_errors;
+  
+
+
