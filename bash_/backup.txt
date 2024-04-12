@@ -1,0 +1,16 @@
+#!/bin/bash
+
+db_owner=UNIVERSITY
+pass=123
+db=XE
+direct="C:/Users/shoroukabdelraouf/OneDrive/Desktop/bash"
+d=$(date +"%Y%m%d")
+file_name="backup_${d}.dmp"
+
+expdp ${db_owner}/${pass}@${db} DUMPFILE=${file_name}  DIRECTORY=dir ;
+
+if [ $? -eq 0 ]; then
+	echo " Make Backup Successfully " >> "${direct}/backup_Logs.log"
+else 
+	echo " ERROR : Make Backup Failed " >> "${direct}/backup_Logs.log"
+fi

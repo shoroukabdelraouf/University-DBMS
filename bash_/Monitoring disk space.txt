@@ -1,0 +1,12 @@
+ #!/bin/bash
+
+log_file="C:/Users/shoroukabdelraouf/OneDrive/Desktop/bash/show_massage.log"
+thresh=100
+d=$(date +"%Y-%m-%d ")
+used_space=$(df -h | awk 'NR==2 {print $6}' | sed 's/%//')
+
+if [ "$used_space" -ge "$thresh" ]; then
+    echo "OOOPS!! The Disk Space limit is  $thresh% | Date: ${d}" >> "${log_file}"
+else 
+    echo "The Disk Space Is Safe | Date: ${d}" >> "${log_file}"
+fi
