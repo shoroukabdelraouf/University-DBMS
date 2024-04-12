@@ -17,3 +17,8 @@ Stud_course (stud_id (FK), cid (FK),grade)
 -	Bash script for database backup.  
 -	Bash script for monitoring disk space and sending alerts.  
 -	Schedule a script to check for anomalies and send notifications.  
+## Java Application Development:
+-	Develop Java classes for Student, Course, and Department using OOP principles.  
+-	Implement CRUD (Create, Read, Update, Delete) operations in the Java application.  
+-	Integrate the Java application with the SQL database.  
+-	Test the application with various scenarios.  
