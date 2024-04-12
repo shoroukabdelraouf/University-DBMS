@@ -22,3 +22,8 @@ Stud_course (stud_id (FK), cid (FK),grade)
 -	Implement CRUD (Create, Read, Update, Delete) operations in the Java application.  
 -	Integrate the Java application with the SQL database.  
 -	Test the application with various scenarios.  
+## Integration and Reporting:
+-	Implement a feature in the Java application to generate a report.
+-	The report should display a list of courses, enrolled students, and average GPA for each course.
+-	Ensure seamless integration between the Java application and the database.
+-	Make the presentation for the project.
