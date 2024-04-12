@@ -9,8 +9,7 @@ Professor (professor_id (PK), fname, lname, salary, address, email, dname (FK))
 Prof_pho (professor_id (FK), phone)  
 Course (cid (PK), c_name, c_hours, dname (FK), professor_id (FK))  
 Stud_course (stud_id (FK), cid (FK),grade)    
-## PLSQL Implementation: 
--	Updating some information.  
+## PLSQL Implementation:   
 -	Calculating GPA.  
 -	Test the PLSQL scripts with sample data.  
 ## Automation Scripts:
@@ -26,4 +25,5 @@ Stud_course (stud_id (FK), cid (FK),grade)
 -	Implement a feature in the Java application to generate a report.  
 -	The report should display a list of courses, enrolled students, and average GPA for each course.  
 -	Ensure seamless integration between the Java application and the database.  
--	Make the presentation for the project.  
+-	Make the presentation for the project.
+  
