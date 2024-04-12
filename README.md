@@ -25,5 +25,5 @@ Stud_course (stud_id (FK), cid (FK),grade)
 -	Implement a feature in the Java application to generate a report.  
 -	The report should display a list of courses, enrolled students, and average GPA for each course.  
 -	Ensure seamless integration between the Java application and the database.  
--	Make the presentation for the project.
+-	Make the presentation for the project.  
   
