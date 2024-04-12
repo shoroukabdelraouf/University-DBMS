@@ -13,3 +13,7 @@ Stud_course (stud_id (FK), cid (FK),grade)
 -	Updating some information.  
 -	Calculating GPA.  
 -	Test the PLSQL scripts with sample data.  
+## Automation Scripts:
+-	Bash script for database backup.  
+-	Bash script for monitoring disk space and sending alerts.  
+-	Schedule a script to check for anomalies and send notifications.  
