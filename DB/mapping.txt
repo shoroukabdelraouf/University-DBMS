@@ -1,0 +1,8 @@
+mapping:
+Department (dname (PK), dept_description, manager_id (FK))
+Student (stud_id (PK), fname, lname, address, email, gender, faculty, dname (FK)))
+Stud_pho (stud_id (FK), phone)
+Professor (professor_id (PK), fname, lname, salary, address, email, dname (FK))
+Prof_pho (professor_id (FK), phone)
+Course (cid (PK), c_name, c_hours, dname (FK), professor_id (FK))
+Stud_course (stud_id (FK), cid (FK),grade)
