@@ -1,0 +1,76 @@
+CREATE OR REPLACE PACKAGE UNIVERSITY.gpa_update_pkg IS
+  TYPE student_id_list IS TABLE OF Student.stud_id%TYPE INDEX BY PLS_INTEGER;
+  students_to_update student_id_list;
+  PROCEDURE add_student_to_update(stud_id IN Student.stud_id%TYPE);
+  PROCEDURE process_updated_students;
+  FUNCTION calculate_acc_gpa(p_stud_id IN NUMBER)RETURN NUMBER;
+END gpa_update_pkg;
+/
+CREATE OR REPLACE PACKAGE BODY UNIVERSITY.gpa_update_pkg IS
+  
+PROCEDURE add_student_to_update(stud_id IN Student.stud_id%TYPE) IS
+BEGIN
+    students_to_update(stud_id) := stud_id;
+
+END add_student_to_update;
+
+  PROCEDURE process_updated_students IS
+  BEGIN
+    FORALL i IN students_to_update.FIRST..students_to_update.LAST
+      UPDATE Student
+      SET acc_GPA = calculate_acc_gpa(students_to_update(i))
+      WHERE stud_id = students_to_update(i);
+
+    students_to_update.DELETE;
+  END process_updated_students;
+  
+  
+  FUNCTION calculate_acc_gpa(p_stud_id IN NUMBER)
+RETURN NUMBER
+IS
+    v_total_hours NUMBER := 0;
+    v_total_grade_points NUMBER := 0;
+    v_gpa NUMBER(8, 2);
+    
+    
+    CURSOR c_student_courses IS
+        SELECT sc.cid, c.c_hours, sc.grade_
+        FROM Stud_course sc
+        JOIN Course c ON sc.cid = c.cid
+        WHERE sc.stud_id = p_stud_id;
+
+BEGIN
+   
+    FOR course_rec IN c_student_courses
+    LOOP
+       
+        CASE course_rec.grade_
+            WHEN 'A+' THEN v_total_grade_points := v_total_grade_points + (4 * course_rec.c_hours);
+            WHEN 'A'  THEN v_total_grade_points := v_total_grade_points + (3.7 * course_rec.c_hours);
+            WHEN 'A-'  THEN v_total_grade_points := v_total_grade_points + (3.5 * course_rec.c_hours);
+            WHEN 'B+'  THEN v_total_grade_points := v_total_grade_points + (3.3 * course_rec.c_hours);
+            WHEN 'B'  THEN v_total_grade_points := v_total_grade_points + (3.2* course_rec.c_hours);
+            WHEN 'B-'  THEN v_total_grade_points := v_total_grade_points + (3 * course_rec.c_hours);
+            WHEN 'C+'  THEN v_total_grade_points := v_total_grade_points + (2.9 * course_rec.c_hours);
+            WHEN 'C'  THEN v_total_grade_points := v_total_grade_points + (2.8* course_rec.c_hours);
+            WHEN 'C-'  THEN v_total_grade_points := v_total_grade_points + (2.6 * course_rec.c_hours);
+            WHEN 'D+'  THEN v_total_grade_points := v_total_grade_points + (2.3* course_rec.c_hours);
+            WHEN 'D'  THEN v_total_grade_points := v_total_grade_points + (2* course_rec.c_hours);
+            WHEN 'F'  THEN v_total_grade_points := v_total_grade_points + (0 * course_rec.c_hours);
+        END CASE;
+
+        v_total_hours := v_total_hours + course_rec.c_hours;
+    END LOOP;
+
+   
+    IF v_total_hours = 0 THEN
+         dbms_output.put_line('the student is not enrolled in any courses');
+      RETURN NULL;
+    ELSE
+      
+        v_gpa := v_total_grade_points / v_total_hours;
+        RETURN v_gpa;
+    END IF;
+END;
+END gpa_update_pkg;
+/

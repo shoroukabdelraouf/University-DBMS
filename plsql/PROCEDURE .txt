@@ -1,0 +1,87 @@
+CREATE OR REPLACE PROCEDURE UNIVERSITY.DeleteDepartment(department_name IN VARCHAR2) AS
+BEGIN
+    -- Update Student table
+    UPDATE Student
+    SET dname = NULL
+    WHERE dname = department_name;
+
+    -- Update Professor table
+    UPDATE Professor
+    SET dname = NULL
+    WHERE dname = department_name;
+    
+    -- Update course table
+    UPDATE course
+    SET dname = NULL
+    WHERE dname = department_name;
+    
+END DeleteDepartment;
+/
+CREATE OR REPLACE PROCEDURE UNIVERSITY.DeleteProfessor(prof_id IN NUMBER) AS
+BEGIN
+
+    UPDATE Course
+    SET professor_id = NULL
+    WHERE professor_id = prof_id;
+
+    DELETE FROM Prof_pho
+    WHERE professor_id = prof_id;
+
+    UPDATE Department
+    SET manager_id = NULL
+    WHERE manager_id = prof_id;
+
+END DeleteProfessor;
+/
+CREATE OR REPLACE PROCEDURE UNIVERSITY.DeleteStudCourse(course_id IN NUMBER) AS
+BEGIN
+
+    DELETE FROM Stud_course
+     WHERE cid = course_id;
+
+   
+END DeleteStudCourse;
+/
+CREATE OR REPLACE PROCEDURE UNIVERSITY.DeleteStudent(student_id IN NUMBER) AS
+BEGIN
+  
+    DELETE FROM Stud_pho
+     WHERE stud_id = student_id;
+
+    DELETE FROM Stud_course
+     WHERE stud_id = student_id;
+
+END DeleteStudent;
+/
+CREATE OR REPLACE procedure UNIVERSITY.insert_course(v_c_name in varchar2,v_hours in number,v_dname in varchar2,v_prof number)
+is
+begin
+
+insert into course (c_name,c_hours,dname,professor_id) values (v_c_name,v_hours ,v_dname ,v_prof );
+     
+end;
+/
+CREATE OR REPLACE PROCEDURE UNIVERSITY.updated_students IS
+  BEGIN
+    --FORALL i IN students_to_update.FIRST..students_to_update.LAST
+      UPDATE Student
+      SET acc_GPA = calculate_acc_gpa(2)
+      WHERE stud_id = 2;
+
+    --students_to_update.DELETE;
+  END;
+/
+CREATE OR REPLACE procedure UNIVERSITY.update_dept(v_dname in varchar2,v_new_desc in varchar2)
+is
+begin
+
+update department 
+     set  dept_description=v_new_desc
+     where dname = v_dname;
+     
+end;
+/
+
+
+
+

@@ -1,0 +1,48 @@
+CREATE OR REPLACE FUNCTION UNIVERSITY.calculate_acc_gpa(p_stud_id IN NUMBER)
+RETURN NUMBER
+IS
+    v_total_hours NUMBER := 0;
+    v_total_grade_points NUMBER := 0;
+    v_gpa NUMBER(8, 2);
+    
+    
+    CURSOR c_student_courses IS
+        SELECT sc.cid, c.c_hours, sc.grade_
+        FROM Stud_course sc
+        JOIN Course c ON sc.cid = c.cid
+        WHERE sc.stud_id = p_stud_id;
+
+BEGIN
+   
+    FOR course_rec IN c_student_courses
+    LOOP
+        -- Convert grade to grade points (customize based on your grading scale)
+        CASE course_rec.grade_
+            WHEN 'A+' THEN v_total_grade_points := v_total_grade_points + (4 * course_rec.c_hours);
+            WHEN 'A'  THEN v_total_grade_points := v_total_grade_points + (3.7 * course_rec.c_hours);
+            WHEN 'A-'  THEN v_total_grade_points := v_total_grade_points + (3.5 * course_rec.c_hours);
+            WHEN 'B+'  THEN v_total_grade_points := v_total_grade_points + (3.3 * course_rec.c_hours);
+            WHEN 'B'  THEN v_total_grade_points := v_total_grade_points + (3.2* course_rec.c_hours);
+            WHEN 'B-'  THEN v_total_grade_points := v_total_grade_points + (3 * course_rec.c_hours);
+            WHEN 'C+'  THEN v_total_grade_points := v_total_grade_points + (2.9 * course_rec.c_hours);
+            WHEN 'C'  THEN v_total_grade_points := v_total_grade_points + (2.8* course_rec.c_hours);
+            WHEN 'C-'  THEN v_total_grade_points := v_total_grade_points + (2.6 * course_rec.c_hours);
+            WHEN 'D+'  THEN v_total_grade_points := v_total_grade_points + (2.3* course_rec.c_hours);
+            WHEN 'D'  THEN v_total_grade_points := v_total_grade_points + (2* course_rec.c_hours);
+            WHEN 'F'  THEN v_total_grade_points := v_total_grade_points + (0 * course_rec.c_hours);
+        END CASE;
+
+        v_total_hours := v_total_hours + course_rec.c_hours;
+    END LOOP;
+
+    -- Avoid division by zero
+    IF v_total_hours = 0 THEN
+      
+      RETURN NULL; -- Handle the case where total credits are zero
+    ELSE
+        -- Calculate GPA
+        v_gpa := v_total_grade_points / v_total_hours;
+        RETURN v_gpa;
+    END IF;
+END;
+/

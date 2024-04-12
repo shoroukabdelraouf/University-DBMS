@@ -1,0 +1,27 @@
+CREATE OR REPLACE FUNCTION UNIVERSITY.CALCULATE_AVG_GPA(course_id IN NUMBER)
+RETURN NUMBER IS
+  v_avg_gpa NUMBER;
+BEGIN
+  SELECT AVG(
+           CASE grade_
+             WHEN 'A+' THEN 4.0
+             WHEN 'A' THEN 3.7
+             WHEN 'A-' THEN 3.5
+             WHEN 'B+' THEN 3.3
+             WHEN 'B' THEN 3.2
+             WHEN 'B-' THEN 3.0
+             WHEN 'C+' THEN 2.9
+             WHEN 'C' THEN 2.8
+             WHEN 'C-' THEN 2.6
+             WHEN 'D+' THEN 2.3
+             WHEN 'D' THEN 2.0
+             ELSE 0.0
+           END
+         )
+  INTO v_avg_gpa
+  FROM stud_course
+  WHERE cid = CALCULATE_AVG_GPA.course_id;
+
+  RETURN v_avg_gpa;
+END CALCULATE_AVG_GPA;
+/
